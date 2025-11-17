@@ -5,10 +5,10 @@
 <div class="mt-5">
     <form action="{{route('specialist.store')}}" method="POST" enctype="multipart/form-data">
         @csrf
-        <input type="number" name="priority" class="w-full rounded-lg p-3 m-3" placeholder="Enter Priority" id="priority" value="{{old('priority')}}">
+        <!-- <input type="number" name="priority" class="w-full rounded-lg p-3 m-3" placeholder="Enter Priority" id="priority" value="{{old('priority')}}">
         @error('priority')
         <p class="text-red-500 mt-2 ">{{ $message }}</p>
-        @enderror
+        @enderror -->
      
         <input type="text" name="name" class="w-full rounded-lg p-3 m-3" placeholder="Enter Specialities" id="name" value="{{old('name')}}">
         @error('name')

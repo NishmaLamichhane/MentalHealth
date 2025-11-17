@@ -67,9 +67,12 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/therapist', [TherapistController::class, 'index'])->name('therapist.index');
     Route::get('/therapist/create', [TherapistController::class, 'create'])->name('therapist.create');
     Route::post('/therapist/store', [TherapistController::class, 'store'])->name('therapist.store');
-    Route::get('/therapist/{id}/edit', [TherapistController::class, 'edit'])->name('therapist.edit');
-    Route::put('/therapist/{id}/update', [TherapistController::class, 'update'])->name('therapist.update');
-    Route::delete('/therapist/{id}', [TherapistController::class, 'destroy'])->name('therapist.destroy');
+    // Route::get('/therapist/{id}/edit', [TherapistController::class, 'edit'])->name('therapist.edit');
+    Route::get('/therapist/{therapist}/edit', [TherapistController::class, 'edit'])->name('therapist.edit');
+    // Route::put('/therapist/{id}/update', [TherapistController::class, 'update'])->name('therapist.update');
+    Route::put('/therapist/{therapist}/update', [TherapistController::class, 'update'])->name('therapist.update');
+    // Route::delete('/therapist/{id}', [TherapistController::class, 'destroy'])->name('therapist.destroy');
+    Route::delete('/therapist/{therapist}', [TherapistController::class, 'destroy'])->name('therapist.destroy');
 
     // Category Routes
     Route::get('/category', [CategoryController::class, 'index'])->name('category.index');

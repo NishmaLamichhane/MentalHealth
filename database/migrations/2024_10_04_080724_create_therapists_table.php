@@ -21,9 +21,8 @@ return new class extends Migration
         $table->string('photopath')->nullable();
         $table->foreignId('specialist_id')->unsigned(); // Foreign key
         $table->decimal('fee', 8, 2);
+        $table->json('time_slot')->nullable();
         $table->timestamps();
-
-        
     });
 }
 

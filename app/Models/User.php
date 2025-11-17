@@ -39,16 +39,17 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'password' => 'hashed', // Ensure password is always hashed
         // No need to cast password here as it will be hashed and not retrieved in plain text
     ];
 
-    /**
-     * The method to set the user's password and ensure it is always hashed.
-     *
-     * @param string $value
-     */
-    public function setPasswordAttribute($value)
-    {
-        $this->attributes['password'] = bcrypt($value);
-    }
+    // /**
+    //  * The method to set the user's password and ensure it is always hashed. 
+    //  *
+    //  * @param string $value
+    //  */
+    // public function setPasswordAttribute($value)
+    // {
+    //     $this->attributes['password'] = bcrypt($value);
+    // }
 }

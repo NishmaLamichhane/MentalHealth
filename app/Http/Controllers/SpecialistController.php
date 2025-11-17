@@ -22,13 +22,22 @@ class SpecialistController extends Controller
     {
         // Validate the request data
         $data = $request->validate([
-            'priority' => 'numeric|required|unique:specialists,priority',
+            // 'priority' => 'numeric|required|unique:specialists,priority',
             'name' => 'required|string|max:255|unique:specialists,name',
         ], [
-            'priority.unique'=>'This priority has already been assigned to previous specialization.',
+            // 'priority.unique'=>'This priority has already been assigned to previous specialization.',
             'name.unique' => 'The specialist name has already been taken. Please choose another name.',
         ]);
 
+        // Generate the lowest missing priority (e.g., 1, 2, 3...)
+        $existingPriorities = Specialist::pluck('priority')->toArray();
+        $priority = 1;
+
+        while (in_array($priority, $existingPriorities)) {
+            $priority++;
+        }
+
+        $data['priority'] = $priority;
         // Create a new specialist
         Specialist::create($data);
         return redirect()->route('specialist.index')->with('success', 'Speciality Added Successfully');
@@ -60,7 +69,19 @@ class SpecialistController extends Controller
     {
         $specialist = Specialist::findOrFail($id);
         $specialist->delete();
-    
+        // Reorder priorities to be continuous
+        $specialists = Specialist::orderBy('priority', 'asc')->get();
+
+        $priority = 1;
+        foreach ($specialists as $spec) {
+            // Only update if priority is different to avoid unnecessary writes
+            if ($spec->priority != $priority) {
+                $spec->priority = $priority;
+                $spec->save();
+            }
+            $priority++;
+        }
+
         return redirect()->route('specialist.index')->with('success', 'Specialist deleted successfully.');
     }
 }
