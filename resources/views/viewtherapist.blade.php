@@ -5,7 +5,7 @@
 
 <style>
   :root {
-    --teal: #0f7c7c; --teal-light: #e6f4f4; --teal-mid: #1a9e9e;
+    --blue: #2563eb; --blue-light: #eff6ff; --blue-mid: #3b82f6;
     --navy: #0d2d45; --gold: #c9974a; --soft-white: #fafaf8;
   }
   body { font-family: 'DM Sans', sans-serif; background: var(--soft-white); }
@@ -13,7 +13,7 @@
 
   /* Breadcrumb */
   .breadcrumb { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: #9ca3af; margin-bottom: 2rem; }
-  .breadcrumb a { color: var(--teal); text-decoration: none; }
+  .breadcrumb a { color: var(--blue-mid); text-decoration: none; }
   .breadcrumb a:hover { text-decoration: underline; }
 
   /* Profile hero */
@@ -24,23 +24,23 @@
   .photo-card-body { padding: 1.5rem; }
   .photo-card-body .name { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--navy); margin-bottom: 0.3rem; }
   .photo-card-body .spec-tag {
-    display: inline-block; background: var(--teal-light); color: var(--teal);
+    display: inline-block; background: var(--blue-light); color: var(--blue-mid);
     padding: 0.3rem 0.9rem; border-radius: 999px; font-size: 0.78rem; font-weight: 600; margin-bottom: 1rem;
   }
   .book-btn {
     display: block; text-align: center;
-    background: linear-gradient(135deg, var(--teal-mid), var(--teal));
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
     color: white; padding: 0.9rem; border-radius: 12px;
     font-weight: 700; font-size: 1rem; text-decoration: none;
-    box-shadow: 0 6px 20px rgba(15,124,124,0.35);
+    box-shadow: 0 6px 20px rgba(37,99,235,0.3);
     transition: transform 0.2s, box-shadow 0.2s;
   }
-  .book-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(15,124,124,0.45); }
+  .book-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(37,99,235,0.4); }
 
   .therapist-name { font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--navy); margin-bottom: 0.4rem; }
   .info-section { margin-bottom: 1.8rem; padding-bottom: 1.8rem; border-bottom: 1px solid #f0f0ee; }
   .info-section:last-of-type { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-  .info-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal-mid); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.4rem; }
+  .info-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue-mid); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.4rem; }
   .info-label svg { width: 14px; height: 14px; }
   .info-text { color: #374151; font-size: 0.95rem; line-height: 1.75; }
   .info-badge { display: inline-flex; align-items: center; gap: 0.4rem; background: #fff7ed; color: var(--gold); border: 1px solid #fde8c0; padding: 0.45rem 1rem; border-radius: 10px; font-weight: 700; font-size: 1rem; }
@@ -52,7 +52,7 @@
   }
   .quote-block h3 { font-family: 'Playfair Display', serif; color: #fff; font-size: 1.3rem; margin-bottom: 0.75rem; }
   .quote-block p { color: rgba(255,255,255,0.7); font-size: 0.9rem; margin-bottom: 1rem; line-height: 1.7; }
-  .quote-block blockquote { font-style: italic; color: #93c5d8; font-size: 0.9rem; line-height: 1.8; border-left: 3px solid var(--teal-mid); padding-left: 1.25rem; text-align: left; }
+  .quote-block blockquote { font-style: italic; color: #93c5fd; font-size: 0.9rem; line-height: 1.8; border-left: 3px solid var(--blue-mid); padding-left: 1.25rem; text-align: left; }
 
   /* Related section */
   .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem; }
@@ -79,7 +79,7 @@
   }
 </style>
 
-<div style="background: linear-gradient(180deg, #e9f5f5 0%, var(--soft-white) 100%); min-height: 100vh;">
+<div style="background: linear-gradient(180deg, #eff6ff 0%, var(--soft-white) 100%); min-height: 100vh;">
 <div style="max-width:1100px; margin:0 auto; padding: 2.5rem 1.25rem 4rem;">
 
   {{-- Breadcrumb --}}
@@ -98,7 +98,7 @@
     <div class="profile-card">
       <h1 class="therapist-name">{{ $therapist->name }}</h1>
       <div style="margin-bottom:2rem; display:flex; flex-wrap:wrap; gap:0.5rem; align-items:center;">
-        <span style="display:inline-block; background:var(--teal-light); color:var(--teal); padding:0.3rem 0.9rem; border-radius:999px; font-size:0.78rem; font-weight:600;">{{ $therapist->specialization ?? 'Therapist' }}</span>
+        <span style="display:inline-block; background:var(--blue-light); color:var(--blue-mid); padding:0.3rem 0.9rem; border-radius:999px; font-size:0.78rem; font-weight:600;">{{ $therapist->specialization ?? 'Therapist' }}</span>
         <span style="display:inline-block; background:#fef3c7; color:#d97706; padding:0.3rem 0.9rem; border-radius:999px; font-size:0.78rem; font-weight:600;">⭐ Verified Professional</span>
       </div>
 
@@ -170,7 +170,7 @@
   {{-- Related Therapists --}}
   <section style="margin-top:4rem;">
     <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1.75rem;">
-      <div style="width:4px; height:2rem; background:var(--teal); border-radius:2px;"></div>
+      <div style="width:4px; height:2rem; background:var(--blue-mid); border-radius:2px;"></div>
       <h2 style="font-family:'Playfair Display',serif; font-size:1.6rem; color:var(--navy);">Related Therapists</h2>
     </div>
     <div class="related-grid">
