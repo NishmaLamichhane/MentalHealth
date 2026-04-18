@@ -13,13 +13,20 @@ class PagesController extends Controller
     public function activities()
     {
         $activities = Activity::all();
-        return view('activities', compact('activities'));
+        $categories = Category::all();
+        return view('activities', compact('activities', 'categories'));
     }
     public function welcome()
     {
         $therapists = Therapist::where('status', 'Available')->latest()->limit(4)->get(); // Fetch all therapists from the database
         return view('welcome', compact('therapists'));
     }
+    public function about()
+    {
+        $therapists = Therapist::all(); // or with pagination/ordering
+        $activities = Activity::latest()->take(6)->get(); // show 6 activities on about page
+        return view('about', compact('activities', 'therapists'));
+    }   
     public function viewTherapist($id)
 {
     $therapist = Therapist::findOrFail($id);
