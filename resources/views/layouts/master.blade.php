@@ -349,7 +349,7 @@
     <!-- ============================================ -->
     <!-- TOP ANNOUNCEMENT BAR -->
     <!-- ============================================ -->
-    <div class="bg-gradient-to-r from-blue-950 via-blue-900 to-indigo-950 text-blue-200 text-xs py-1.5 overflow-hidden relative">
+<div class="bg-gradient-to-r from-blue-50 via-blue-100 to-indigo-50 text-blue-500 text-xs py-1.5 overflow-hidden relative">
         <div class="flex whitespace-nowrap ticker-scroll">
             <span class="mx-8 flex items-center gap-1.5"><i class="ri-heart-pulse-line text-blue-400"></i> Your mental health matters — free consultation for first-time users</span>
             <span class="mx-8 flex items-center gap-1.5"><i class="ri-phone-line text-blue-400"></i> Crisis Helpline: 9865162745 — Available 24/7</span>
