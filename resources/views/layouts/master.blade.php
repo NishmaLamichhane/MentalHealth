@@ -11,12 +11,15 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap');
 
-        html { scroll-behavior: smooth; }
+        html {
+            scroll-behavior: smooth;
+        }
 
         .nav-link {
             position: relative;
             transition: color 0.3s ease;
         }
+
         .nav-link::after {
             content: '';
             position: absolute;
@@ -29,6 +32,7 @@
             transform: translateX(-50%);
             border-radius: 2px;
         }
+
         .nav-link:hover::after {
             width: 100%;
         }
@@ -39,6 +43,7 @@
             transform: translateY(8px);
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
+
         .dropdown:hover .dropdown-menu {
             opacity: 1;
             visibility: visible;
@@ -56,6 +61,7 @@
             filter: drop-shadow(0 0 12px rgba(96, 165, 250, 0.25));
             transition: filter 0.4s ease;
         }
+
         .logo-glow:hover {
             filter: drop-shadow(0 0 20px rgba(96, 165, 250, 0.4));
         }
@@ -69,6 +75,7 @@
             overflow: hidden;
             transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
+
         .mobile-menu.open {
             max-height: 700px;
         }
@@ -78,6 +85,7 @@
             display: inline-block;
             transition: color 0.3s ease, padding-left 0.3s ease;
         }
+
         .footer-link:hover {
             color: #93c5fd;
             padding-left: 6px;
@@ -86,6 +94,7 @@
         .social-icon {
             transition: all 0.3s ease;
         }
+
         .social-icon:hover {
             transform: translateY(-3px);
             box-shadow: 0 6px 20px rgba(96, 165, 250, 0.3);
@@ -95,30 +104,51 @@
             position: relative;
             overflow: hidden;
         }
+
         .cta-pulse::before {
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
             transform: translateX(-100%);
             transition: transform 0.6s ease;
         }
+
         .cta-pulse:hover::before {
             transform: translateX(100%);
         }
 
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #0f172a; }
-        ::-webkit-scrollbar-thumb { background: #1e3a5f; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #2563eb; }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #1e3a5f;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #2563eb;
+        }
 
         @keyframes ticker {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
         }
+
         .ticker-scroll {
             animation: ticker 30s linear infinite;
         }
+
         .ticker-scroll:hover {
             animation-play-state: paused;
         }
@@ -128,9 +158,188 @@
             visibility: hidden;
             transition: all 0.3s ease;
         }
+
         .back-to-top.visible {
             opacity: 1;
             visibility: visible;
+        }
+
+        /* ============================================ */
+        /* MODALS — Privacy Policy & Terms of Service    */
+        /* ============================================ */
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.25rem;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                visibility 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .modal.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 1.5rem;
+            width: 100%;
+            max-width: 560px;
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 2.5rem 2.25rem;
+            position: relative;
+            box-shadow:
+                0 25px 60px -12px rgba(0, 0, 0, 0.3),
+                0 0 0 1px rgba(59, 130, 246, 0.08);
+            transform: scale(0.92) translateY(16px);
+            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .modal.open .modal-content {
+            transform: scale(1) translateY(0);
+        }
+
+        /* Custom scrollbar inside modal */
+        .modal-content::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .modal-content::-webkit-scrollbar-track {
+            background: transparent;
+            border-radius: 10px;
+            margin: 0.5rem 0;
+        }
+
+        .modal-content::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+
+        .modal-content::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* Close button */
+        .close-btn {
+            position: absolute;
+            top: 1.25rem;
+            right: 1.25rem;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f1f5f9;
+            color: #64748b;
+            font-size: 1.25rem;
+            line-height: 1;
+            cursor: pointer;
+            border: none;
+            transition: all 0.25s ease;
+            z-index: 10;
+        }
+
+        .close-btn:hover {
+            background: #fee2e2;
+            color: #dc2626;
+            transform: rotate(90deg) scale(1.05);
+        }
+
+        /* Headings */
+        .modal-content h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid transparent;
+            background-image: linear-gradient(to right, #3b82f6, #8b5cf6);
+            background-size: 60px 2px;
+            background-position: left center;
+            background-repeat: no-repeat;
+        }
+
+        /* Paragraphs */
+        .modal-content p {
+            font-size: 0.9rem;
+            line-height: 1.75;
+            color: #475569;
+            margin-bottom: 1.15rem;
+        }
+
+        .modal-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Optional: Add section dividers or extra content styling */
+        .modal-content h3 {
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .modal-content ul,
+        .modal-content ol {
+            padding-left: 1.25rem;
+            margin-bottom: 1.15rem;
+        }
+
+        .modal-content li {
+            font-size: 0.9rem;
+            line-height: 1.75;
+            color: #475569;
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-content strong {
+            color: #1e293b;
+            font-weight: 600;
+        }
+
+        .modal-content a {
+            color: #3b82f6;
+            text-decoration: underline;
+            text-decoration-color: rgba(59, 130, 246, 0.3);
+            text-underline-offset: 3px;
+            transition: color 0.2s ease, text-decoration-color 0.2s ease;
+        }
+
+        .modal-content a:hover {
+            color: #2563eb;
+            text-decoration-color: rgba(37, 99, 235, 0.5);
+        }
+
+        /* Optional: Highlight box for important notices */
+        .modal-content .notice-box {
+            background: linear-gradient(135deg, #eff6ff, #eef2ff);
+            border: 1px solid #bfdbfe;
+            border-radius: 0.75rem;
+            padding: 1rem 1.25rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .modal-content .notice-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        .modal.open {
+            cursor: pointer;
         }
     </style>
 </head>
@@ -163,7 +372,7 @@
                 <!-- Logo & Brand -->
                 <a href="{{ route('home') }}" class="flex items-center gap-3 shrink-0 group">
                     <img src="{{ asset('image/logoo.png') }}" alt="Relief Logo"
-                         class="w-10 h-10 lg:w-11 lg:h-11 rounded-xl logo-glow bg-blue-500 transition-transform duration-300 group-hover:scale-105">
+                        class="w-10 h-10 lg:w-11 lg:h-11 rounded-xl logo-glow bg-blue-500 transition-transform duration-300 group-hover:scale-105">
                     <div class="hidden sm:block">
                         <span class="text-xl font-bold text-gray-900 tracking-tight font-[Playfair_Display,serif]">Relief</span>
                         <span class="block text-[10px] uppercase tracking-[0.2em] text-blue-500 font-medium -mt-0.5">Mental Wellness</span>
@@ -172,14 +381,14 @@
 
                 <!-- Desktop Search -->
                 <form action="{{ route('search') }}" method="GET"
-                      class="hidden lg:flex items-center relative group">
+                    class="hidden lg:flex items-center relative group">
                     <div class="relative">
                         <i class="ri-search-line absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm transition-colors group-focus-within:text-blue-500"></i>
                         <input type="search"
-                               name="search"
-                               value="{{ request()->query('search') }}"
-                               placeholder="Search therapists, topics, resources..."
-                               class="search-input w-72 xl:w-80 pl-9 pr-4 py-2 text-sm bg-gray-100 border border-transparent rounded-full focus:bg-white focus:border-blue-300 focus:outline-none transition-all duration-300 placeholder:text-gray-400">
+                            name="search"
+                            value="{{ request()->query('search') }}"
+                            placeholder="Search therapists, topics, resources..."
+                            class="search-input w-72 xl:w-80 pl-9 pr-4 py-2 text-sm bg-gray-100 border border-transparent rounded-full focus:bg-white focus:border-blue-300 focus:outline-none transition-all duration-300 placeholder:text-gray-400">
                     </div>
                 </form>
 
@@ -192,17 +401,17 @@
                 <div class="hidden lg:flex items-center gap-1">
 
                     <a href="{{ route('home') }}"
-                       class="nav-link px-3 py-2 text-sm font-medium text-gray-700 hover:text-blue-600">
+                        class="nav-link px-3 py-2 text-sm font-medium text-gray-700 hover:text-blue-600">
                         <i class="ri-home-4-line mr-1 text-xs"></i>Home
                     </a>
 
                     <a href="{{ route('about') }}"
-                       class="nav-link px-3 py-2 text-sm font-medium text-gray-700 hover:text-blue-600">
+                        class="nav-link px-3 py-2 text-sm font-medium text-gray-700 hover:text-blue-600">
                         <i class="ri-information-line mr-1 text-xs"></i>About Us
                     </a>
 
                     <a href="{{ route('activities') }}"
-                       class="nav-link px-3 py-2 text-sm font-medium text-gray-700 hover:text-blue-600">
+                        class="nav-link px-3 py-2 text-sm font-medium text-gray-700 hover:text-blue-600">
                         <i class="ri-video-line mr-1 text-xs"></i>Videos
                     </a>
 
@@ -217,11 +426,11 @@
                                 <p class="text-[10px] uppercase tracking-wider text-gray-400 font-semibold">Our Specialists</p>
                             </div>
                             @php
-                                $specialists = App\Models\Specialist::orderBy('priority')->get();
+                            $specialists = App\Models\Specialist::orderBy('priority')->get();
                             @endphp
                             @foreach($specialists as $specialist)
                             <a href="{{ route('specialisttherapist', $specialist->id) }}"
-                               class="flex items-center gap-3 px-3 py-2 text-sm text-gray-600 hover:bg-blue-50 hover:text-blue-700 transition-colors rounded-lg mx-1 w-[calc(100%-8px)]">
+                                class="flex items-center gap-3 px-3 py-2 text-sm text-gray-600 hover:bg-blue-50 hover:text-blue-700 transition-colors rounded-lg mx-1 w-[calc(100%-8px)]">
                                 <span class="w-7 h-7 rounded-full bg-gradient-to-br from-blue-100 to-indigo-100 flex items-center justify-center text-blue-600 text-xs font-semibold shrink-0">
                                     {{ Str::substr($specialist->name, 0, 1) }}
                                 </span>
@@ -279,7 +488,7 @@
                         Sign In
                     </a>
                     <a href="{{ route('register') ?? '#' }}"
-                       class="cta-pulse text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 px-5 py-2.5 rounded-full shadow-md shadow-blue-200 transition-all duration-300 hover:shadow-lg hover:shadow-blue-300">
+                        class="cta-pulse text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 px-5 py-2.5 rounded-full shadow-md shadow-blue-200 transition-all duration-300 hover:shadow-lg hover:shadow-blue-300">
                         Get Started
                     </a>
                     @endauth
@@ -292,8 +501,8 @@
                 <!-- so it renders properly on mobile            -->
                 <!-- ========================================== -->
                 <button id="mobileToggle"
-                        class="lg:hidden w-10 h-10 flex items-center justify-center rounded-xl bg-gray-100 hover:bg-gray-200 transition-colors"
-                        aria-label="Toggle menu">
+                    class="lg:hidden w-10 h-10 flex items-center justify-center rounded-xl bg-gray-100 hover:bg-gray-200 transition-colors"
+                    aria-label="Toggle menu">
                     <i class="ri-menu-3-line text-xl text-gray-700 open-icon"></i>
                     <i class="ri-close-line text-xl text-gray-700 close-icon hidden"></i>
                 </button>
@@ -312,33 +521,33 @@
                         <div class="relative">
                             <i class="ri-search-line absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
                             <input type="search" name="search"
-                                   value="{{ request()->query('search') }}"
-                                   placeholder="Search..."
-                                   class="w-full pl-9 pr-4 py-2.5 text-sm bg-gray-100 rounded-xl border-0 focus:bg-white focus:ring-2 focus:ring-blue-300 focus:outline-none transition-all">
+                                value="{{ request()->query('search') }}"
+                                placeholder="Search..."
+                                class="w-full pl-9 pr-4 py-2.5 text-sm bg-gray-100 rounded-xl border-0 focus:bg-white focus:ring-2 focus:ring-blue-300 focus:outline-none transition-all">
                         </div>
                     </form>
 
                     <!-- Nav Links -->
                     <a href="{{ route('home') }}"
-                       class="flex items-center gap-3 px-3 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-xl transition-colors">
+                        class="flex items-center gap-3 px-3 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-xl transition-colors">
                         <i class="ri-home-4-line text-lg text-gray-400"></i>Home
                     </a>
 
                     <!-- About Us — was missing before -->
                     <a href="{{ route('about') }}"
-                       class="flex items-center gap-3 px-3 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-xl transition-colors">
+                        class="flex items-center gap-3 px-3 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-xl transition-colors">
                         <i class="ri-information-line text-lg text-gray-400"></i>About Us
                     </a>
 
                     <a href="{{ route('activities') }}"
-                       class="flex items-center gap-3 px-3 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-xl transition-colors">
+                        class="flex items-center gap-3 px-3 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-xl transition-colors">
                         <i class="ri-video-line text-lg text-gray-400"></i>Videos
                     </a>
 
                     <!-- Mobile Specialists Accordion -->
                     <div>
                         <button id="mobileSpecToggle"
-                                class="flex items-center justify-between w-full px-3 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-xl transition-colors">
+                            class="flex items-center justify-between w-full px-3 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-xl transition-colors">
                             <span class="flex items-center gap-3">
                                 <i class="ri-user-heart-line text-lg text-gray-400"></i>Specialists
                             </span>
@@ -347,7 +556,7 @@
                         <div id="mobileSpecMenu" class="hidden pl-10 pb-1 space-y-0.5">
                             @foreach($specialists as $specialist)
                             <a href="{{ route('specialisttherapist', $specialist->id) }}"
-                               class="block px-3 py-2 text-sm text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
+                                class="block px-3 py-2 text-sm text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
                                 {{ $specialist->name }}
                             </a>
                             @endforeach
@@ -358,31 +567,31 @@
                     <div class="border-t border-gray-100 pt-3 mt-3 space-y-1">
                         @auth
                         <a href="{{ route('bookings.index') }}"
-                           class="flex items-center gap-3 px-3 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-xl transition-colors">
+                            class="flex items-center gap-3 px-3 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-xl transition-colors">
                             <i class="ri-calendar-check-line text-lg text-gray-400"></i>My Appointments
                         </a>
                         <a href="{{ route('profile.edit') }}"
-                           class="flex items-center gap-3 px-3 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-xl transition-colors">
+                            class="flex items-center gap-3 px-3 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-xl transition-colors">
                             <i class="ri-user-settings-line text-lg text-gray-400"></i>My Profile
                         </a>
                         <a href="{{ route('user_progress.index') }}"
-                           class="flex items-center gap-3 px-3 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-xl transition-colors">
+                            class="flex items-center gap-3 px-3 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-xl transition-colors">
                             <i class="ri-line-chart-line text-lg text-gray-400"></i>Progress Tracker
                         </a>
                         <form action="{{ route('logout') }}" method="POST">
                             @csrf
                             <button type="submit"
-                                    class="flex items-center gap-3 w-full px-3 py-2.5 text-red-500 hover:bg-red-50 rounded-xl transition-colors">
+                                class="flex items-center gap-3 w-full px-3 py-2.5 text-red-500 hover:bg-red-50 rounded-xl transition-colors">
                                 <i class="ri-logout-box-r-line text-lg"></i>Sign Out
                             </button>
                         </form>
                         @else
                         <a href="{{ route('login') }}"
-                           class="flex items-center gap-3 px-3 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-xl transition-colors">
+                            class="flex items-center gap-3 px-3 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded-xl transition-colors">
                             <i class="ri-login-box-line text-lg text-gray-400"></i>Sign In
                         </a>
                         <a href="{{ route('register') ?? '#' }}"
-                           class="block mx-3 text-center text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-indigo-600 px-5 py-2.5 rounded-xl">
+                            class="block mx-3 text-center text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-indigo-600 px-5 py-2.5 rounded-xl">
                             Get Started
                         </a>
                         @endauth
@@ -406,7 +615,7 @@
     <footer class="relative bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 text-gray-300 overflow-hidden">
         <div class="absolute top-0 left-0 right-0 overflow-hidden leading-none -translate-y-[99%]">
             <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full">
-                <path d="M0 60V20C240 0 480 40 720 30C960 20 1200 0 1440 20V60H0Z" fill="#0f172a"/>
+                <path d="M0 60V20C240 0 480 40 720 30C960 20 1200 0 1440 20V60H0Z" fill="#0f172a" />
             </svg>
         </div>
         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-900/10 rounded-full blur-3xl pointer-events-none"></div>
@@ -417,7 +626,7 @@
                 <div class="lg:col-span-1">
                     <a href="{{ route('home') }}" class="flex items-center gap-3 mb-5 group">
                         <img src="{{ asset('image/logoo.png') }}" alt="Relief Logo"
-                             class="w-11 h-11 rounded-xl logo-glow transition-transform duration-300 group-hover:scale-105">
+                            class="w-11 h-11 rounded-xl logo-glow transition-transform duration-300 group-hover:scale-105">
                         <div>
                             <span class="text-xl font-bold text-white tracking-tight font-[Playfair_Display,serif]">Relief</span>
                             <span class="block text-[10px] uppercase tracking-[0.2em] text-blue-400 font-medium -mt-0.5">Mental Wellness</span>
@@ -482,10 +691,10 @@
                         <div class="relative">
                             <i class="ri-mail-line absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm"></i>
                             <input type="email" placeholder="Enter your email"
-                                   class="w-full pl-9 pr-4 py-2.5 text-sm bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-gray-500 focus:outline-none focus:border-blue-500 focus:bg-white/10 transition-all duration-300">
+                                class="w-full pl-9 pr-4 py-2.5 text-sm bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-gray-500 focus:outline-none focus:border-blue-500 focus:bg-white/10 transition-all duration-300">
                         </div>
                         <button type="submit"
-                                class="cta-pulse w-full text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 py-2.5 rounded-xl shadow-lg shadow-blue-900/30 transition-all duration-300">
+                            class="cta-pulse w-full text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 py-2.5 rounded-xl shadow-lg shadow-blue-900/30 transition-all duration-300">
                             Subscribe
                         </button>
                     </form>
@@ -502,24 +711,28 @@
             </div>
 
             <div class="mt-12 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
-                <p class="text-xs text-gray-500">&copy; {{ date('Y') }} Relief Mental Wellness. All rights reserved.</p>
+                <p class="text-xs text-gray-500">&copy; {{ date('Y') }} NishmaLamichhane. All rights reserved.</p>
                 <div class="flex items-center gap-5">
-                    <a href="#" class="text-xs text-gray-500 hover:text-gray-300 transition-colors">Privacy Policy</a>
+                    <a href="#" onclick="openModal('privacyModal')" class="text-xs text-gray-500 hover:text-gray-300 transition-colors">
+                        Privacy Policy
+                    </a>
                     <span class="text-gray-700">·</span>
-                    <a href="#" class="text-xs text-gray-500 hover:text-gray-300 transition-colors">Terms of Service</a>
+
+                    <a href="#" onclick="openModal('termsModal')" class="text-xs text-gray-500 hover:text-gray-300 transition-colors">
+                        Terms of Service
+                    </a>
                     <span class="text-gray-700">·</span>
-                    <a href="#" class="text-xs text-gray-500 hover:text-gray-300 transition-colors">Cookie Policy</a>
+
                 </div>
             </div>
-        </div>
     </footer>
 
     <!-- ============================================ -->
     <!-- BACK TO TOP BUTTON -->
     <!-- ============================================ -->
     <button id="backToTop"
-            class="back-to-top fixed bottom-6 right-6 z-50 w-11 h-11 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-300/30 flex items-center justify-center hover:shadow-xl hover:shadow-blue-400/40 hover:-translate-y-0.5 transition-all duration-300"
-            aria-label="Back to top">
+        class="back-to-top fixed bottom-6 right-6 z-50 w-11 h-11 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-300/30 flex items-center justify-center hover:shadow-xl hover:shadow-blue-400/40 hover:-translate-y-0.5 transition-all duration-300"
+        aria-label="Back to top">
         <i class="ri-arrow-up-line text-lg"></i>
     </button>
 
@@ -527,11 +740,29 @@
     <!-- TOAST NOTIFICATION -->
     <!-- ============================================ -->
     <div id="toast"
-         class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[100] bg-emerald-600 text-white text-sm font-medium px-5 py-3 rounded-xl shadow-xl shadow-emerald-900/30 flex items-center gap-2 transition-all duration-300 opacity-0 translate-y-4 pointer-events-none">
+        class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[100] bg-emerald-600 text-white text-sm font-medium px-5 py-3 rounded-xl shadow-xl shadow-emerald-900/30 flex items-center gap-2 transition-all duration-300 opacity-0 translate-y-4 pointer-events-none">
         <i class="ri-check-line"></i>
         <span>Subscribed successfully!</span>
     </div>
 
+    <!-- Modals -->
+    <div id="privacyModal" class="modal" onclick="if(event.target===this)closeModal('privacyModal')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="close-btn" onclick="closeModal('privacyModal')">&times;</span>
+            <h2>Privacy Policy</h2>
+            <p>Your privacy is important to us. We collect minimal personal data and ensure it is securely stored. We never sell your information to third parties.</p>
+            <p>By using our platform, you agree to our data handling practices focused on safety and confidentiality.</p>
+        </div>
+    </div>
+
+    <div id="termsModal" class="modal" onclick="if(event.target===this)closeModal('termsModal')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="close-btn" onclick="closeModal('termsModal')">&times;</span>
+            <h2>Terms of Service</h2>
+            <p>By accessing this platform, you agree to use it responsibly and respectfully.</p>
+            <p>Misuse, harmful behavior, or violating guidelines may result in restricted access.</p>
+        </div>
+    </div>
     <!-- ============================================ -->
     <!-- SCRIPTS -->
     <!-- ============================================ -->
@@ -556,8 +787,8 @@
         if (mobileSpecToggle) {
             mobileSpecToggle.addEventListener('click', () => {
                 mobileSpecMenu.classList.toggle('hidden');
-                specArrow.style.transform = mobileSpecMenu.classList.contains('hidden')
-                    ? 'rotate(0deg)' : 'rotate(180deg)';
+                specArrow.style.transform = mobileSpecMenu.classList.contains('hidden') ?
+                    'rotate(0deg)' : 'rotate(180deg)';
             });
         }
 
@@ -567,7 +798,10 @@
             backToTop.classList.toggle('visible', window.scrollY > 400);
         });
         backToTop.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
         });
 
         // Toast notification
@@ -583,12 +817,14 @@
 
         // Smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
+            anchor.addEventListener('click', function(e) {
                 e.preventDefault();
                 const targetId = this.getAttribute('href');
                 const targetElement = document.querySelector(targetId);
                 if (targetElement) {
-                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
                 }
             });
         });
@@ -600,6 +836,26 @@
                 openIcon.classList.remove('hidden');
                 closeIcon.classList.add('hidden');
             });
+        });
+
+        function openModal(id) {
+            document.getElementById(id).classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        // Close on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal.open').forEach(m => {
+                    m.classList.remove('open');
+                });
+                document.body.style.overflow = '';
+            }
         });
     </script>
 </body>
