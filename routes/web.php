@@ -20,6 +20,7 @@ Route::get('/activities', [PagesController::class, 'activities'])->name('activit
 Route::get('/viewtherapist/{id}', [PagesController::class, 'viewtherapist'])->name('viewtherapist');
 Route::get('/specialisttherapist/{id}', [PagesController::class, 'specialisttherapist'])->name('specialisttherapist');
 Route::get('/search', [PagesController::class, 'search'])->name('search');
+Route::get('/about', [PagesController::class, 'about'])->name('about');
 
 // Route::get('register', [RegisteredUserController::class, 'create'])->name('register');
 // Route::post('register', [RegisteredUserController::class, 'store']);
