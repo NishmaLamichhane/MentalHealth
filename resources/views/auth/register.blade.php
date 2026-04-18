@@ -1,148 +1,162 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Peaceful Mind - Register</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <script>
-        function validateForm(event) {
-            let isValid = true;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Peaceful Mind — Register</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --teal:#0f7c7c; --teal-light:#e6f4f4; --teal-mid:#1a9e9e; --navy:#0d2d45; --gold:#c9974a; --soft-white:#fafaf8; }
+    body { font-family:'DM Sans',sans-serif; background:var(--soft-white); min-height:100vh; display:flex; }
 
-            // Name Validation
-            let name = document.getElementById("name").value.trim();
-            let nameError = document.getElementById("nameError");
-            if (name.length < 3) {
-                nameError.innerText = "Name must be at least 3 characters long.";
-                isValid = false;
-            } else {
-                nameError.innerText = "";
-            }
+    .auth-container { display:grid; grid-template-columns:1fr 1fr; min-height:100vh; width:100%; }
 
-            // Email Validation
-            let email = document.getElementById("email").value.trim();
-            let emailError = document.getElementById("emailError");
-            let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailPattern.test(email)) {
-                emailError.innerText = "Enter a valid email address.";
-                isValid = false;
-            } else {
-                emailError.innerText = "";
-            }
+    /* Left panel */
+    .auth-visual {
+      background:linear-gradient(135deg, var(--navy) 0%, #174a6e 40%, var(--teal) 100%);
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      padding:3rem; text-align:center; position:relative; overflow:hidden;
+    }
+    .auth-visual::before {
+      content:''; position:absolute; inset:0;
+      background:radial-gradient(ellipse at 30% 70%, rgba(201,151,74,0.2) 0%, transparent 60%);
+      pointer-events:none;
+    }
+    .auth-visual img { width:100%; max-width:340px; height:320px; object-fit:cover; border-radius:24px; box-shadow:0 20px 50px rgba(0,0,0,0.3); margin-bottom:2rem; position:relative; z-index:1; }
+    .auth-visual-title { font-family:'Playfair Display',serif; font-size:1.8rem; color:#fff; line-height:1.3; position:relative; z-index:1; }
+    .auth-visual-sub { color:rgba(255,255,255,0.65); font-size:0.88rem; margin-top:0.6rem; line-height:1.7; position:relative; z-index:1; }
+    .auth-dots { display:flex; gap:0.5rem; margin-top:1.5rem; position:relative; z-index:1; }
+    .auth-dots span { width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,0.3); }
+    .auth-dots span:first-child { background:#fff; width:24px; border-radius:4px; }
 
-            // Password Validation
-            let password = document.getElementById("password").value;
-            let passwordError = document.getElementById("passwordError");
-            if (password.length < 6) {
-                passwordError.innerText = "Password must be at least 6 characters long.";
-                isValid = false;
-            } else {
-                passwordError.innerText = "";
-            }
+    /* Right panel */
+    .auth-form-panel { display:flex; align-items:center; justify-content:center; padding:2.5rem 1.5rem; background:#fff; overflow-y:auto; }
+    .auth-form-inner { width:100%; max-width:400px; }
+    .auth-brand { display:flex; align-items:center; gap:0.6rem; margin-bottom:2rem; }
+    .auth-brand-dot { width:10px; height:10px; background:var(--teal); border-radius:50%; }
+    .auth-brand-name { font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--navy); }
+    .auth-brand-name span { color:var(--gold); }
 
-            // Confirm Password Validation
-            let confirmPassword = document.getElementById("password_confirmation").value;
-            let confirmPasswordError = document.getElementById("confirmPasswordError");
-            if (confirmPassword !== password) {
-                confirmPasswordError.innerText = "Passwords do not match.";
-                isValid = false;
-            } else {
-                confirmPasswordError.innerText = "";
-            }
+    .auth-title { font-family:'Playfair Display',serif; font-size:2rem; color:var(--navy); margin-bottom:0.4rem; }
+    .auth-subtitle { color:#9ca3af; font-size:0.88rem; margin-bottom:2rem; }
 
-            if (!isValid) {
-                event.preventDefault();
-            }
-        }
+    .form-group { margin-bottom:1.1rem; }
+    label { display:block; font-size:0.72rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#374151; margin-bottom:0.45rem; }
+    input[type=text], input[type=email], input[type=password] {
+      width:100%; padding:0.8rem 1rem; border:1.5px solid #e5e7eb;
+      border-radius:12px; font-size:0.9rem; font-family:'DM Sans',sans-serif; color:#1f2937;
+      background:var(--soft-white); outline:none; transition:border-color 0.2s, box-shadow 0.2s;
+    }
+    input:focus { border-color:var(--teal); box-shadow:0 0 0 3px rgba(15,124,124,0.12); background:#fff; }
+    .field-error { color:#ef4444; font-size:0.75rem; margin-top:0.3rem; display:block; min-height:1em; }
 
-        function clearError(fieldId, errorId) {
-            let field = document.getElementById(fieldId);
-            let error = document.getElementById(errorId);
-            field.addEventListener("input", function () {
-                error.innerText = "";
-            });
-        }
-        
-        window.onload = function () {
-            clearError("name", "nameError");
-            clearError("email", "emailError");
-            clearError("password", "passwordError");
-            clearError("password_confirmation", "confirmPasswordError");
-        };
-    </script>
+    .submit-btn { width:100%; background:linear-gradient(135deg,var(--teal-mid),var(--teal)); color:#fff; padding:0.9rem; border:none; border-radius:12px; font-size:1rem; font-weight:700; font-family:'DM Sans',sans-serif; cursor:pointer; box-shadow:0 6px 20px rgba(15,124,124,0.35); transition:transform 0.2s, box-shadow 0.2s; margin-top:0.75rem; }
+    .submit-btn:hover { transform:translateY(-2px); box-shadow:0 10px 28px rgba(15,124,124,0.45); }
+
+    .auth-footer { text-align:center; margin-top:1.25rem; font-size:0.85rem; color:#9ca3af; }
+    .auth-footer a { color:var(--teal); font-weight:600; text-decoration:none; }
+    .auth-footer a:hover { text-decoration:underline; }
+
+    .back-home { display:flex; align-items:center; justify-content:center; gap:0.4rem; margin-top:0.75rem; color:#9ca3af; font-size:0.83rem; text-decoration:none; transition:color 0.2s; }
+    .back-home:hover { color:var(--navy); }
+
+    @media(max-width:768px){
+      .auth-container { grid-template-columns:1fr; }
+      .auth-visual { display:none; }
+      .auth-form-panel { padding:2rem 1.25rem; min-height:100vh; }
+      .auth-title { font-size:1.7rem; }
+    }
+  </style>
 </head>
-<body class="bg-gray-100 text-gray-900 flex justify-center items-center min-h-screen">
-    <div class="w-full max-w-6xl mx-4 sm:mx-auto bg-white shadow-lg sm:rounded-lg overflow-hidden my-10">
-        <div class="w-full flex flex-col sm:flex-row">
-            <div class="w-full sm:w-1/2 flex items-center justify-center bg-sky-100">
-                <img src="{{ asset('image/Naruto.png') }}" alt="Registration Illustration" class="w-full h-full object-cover">
-            </div>
+<body>
+<div class="auth-container">
 
-            <div class="w-full sm:w-1/2 p-6 sm:p-12">
-                <div class="flex justify-center">
-                    <div class="w-full max-w-md">
-                        <div class="text-indigo-900 font-semibold text-3xl font-bold text-center">
-                            Mental Health<span class="text-yellow-600"> Support</span>
-                        </div>
+  {{-- Left Visual --}}
+  <div class="auth-visual">
+    <img src="{{ asset('image/Naruto.png') }}" alt="Register Illustration">
+    <div class="auth-visual-title">Begin Your Healing<br>Journey Today</div>
+    <div class="auth-visual-sub">Join thousands finding peace and balance<br>with expert therapists and mindfulness tools.</div>
+    <div class="auth-dots"><span></span><span></span><span></span></div>
+  </div>
 
-                        <div class="flex flex-col mt-4">
-                            <h1 class="text-2xl xl:text-3xl font-extrabold text-center">Register</h1>
-                            <div class="mt-8">
-                                <form method="POST" action="{{ route('register') }}" onsubmit="validateForm(event)">
-                                    @csrf
-                                    <!-- Name -->
-                                    <div>
-                                        <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
-                                        <input id="name" type="text" name="name" value="{{ old('name') }}" required autofocus autocomplete="name" class="w-full px-4 py-2 mt-1 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500">
-                                        <span id="nameError" class="text-red-500 text-xs mt-1"></span>
-                                    </div>
+  {{-- Right Form --}}
+  <div class="auth-form-panel">
+    <div class="auth-form-inner">
+      <div class="auth-brand">
+        <div class="auth-brand-dot"></div>
+        <div class="auth-brand-name">Peaceful <span>Mind</span></div>
+      </div>
+      <h1 class="auth-title">Create Account</h1>
+      <p class="auth-subtitle">Start your mental wellness journey — it's free.</p>
 
-                                    <!-- Email Address -->
-                                    <div class="mt-4">
-                                        <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                                        <input id="email" type="email" name="email" value="{{ old('email') }}" required autocomplete="username" class="w-full px-4 py-2 mt-1 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500">
-                                        <span id="emailError" class="text-red-500 text-xs mt-1"></span>
-                                    </div>
+      <form method="POST" action="{{ route('register') }}" onsubmit="return validateForm(event)">
+        @csrf
 
-                                    <!-- Password -->
-                                    <div class="mt-4">
-                                        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-                                        <input id="password" type="password" name="password" required autocomplete="new-password" class="w-full px-4 py-2 mt-1 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500">
-                                        <span id="passwordError" class="text-red-500 text-xs mt-1"></span>
-                                    </div>
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" name="name" value="{{ old('name') }}" placeholder="Your name" required autofocus autocomplete="name">
+          <span id="nameError" class="field-error"></span>
+        </div>
 
-                                    <!-- Confirm Password -->
-                                    <div class="mt-4">
-                                        <label for="password_confirmation" class="block text-sm font-medium text-gray-700">Confirm Password</label>
-                                        <input id="password_confirmation" type="password" name="password_confirmation" required autocomplete="new-password" class="w-full px-4 py-2 mt-1 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500">
-                                        <span id="confirmPasswordError" class="text-red-500 text-xs mt-1"></span>
-                                    </div>
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" value="{{ old('email') }}" placeholder="you@example.com" required autocomplete="username">
+          <span id="emailError" class="field-error"></span>
+        </div>
 
-                                    <!-- Submit Button -->
-                                    <div class="flex items-center justify-end mt-4">
-                                        <button type="submit" class="ml-4 tracking-wide font-semibold bg-indigo-600 text-white w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
-                                            Register
-                                        </button>
-                                    </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" placeholder="At least 6 characters" required autocomplete="new-password">
+          <span id="passwordError" class="field-error"></span>
+        </div>
 
-                                    <!-- Already Registered? -->
-                                    <a href="{{ route('login') }}" class="block text-center mt-4 text-sm text-gray-600 hover:text-gray-900">
-                                        Already registered?
-                                    </a>
+        <div class="form-group">
+          <label for="password_confirmation">Confirm Password</label>
+          <input type="password" id="password_confirmation" name="password_confirmation" placeholder="Repeat your password" required autocomplete="new-password">
+          <span id="confirmPasswordError" class="field-error"></span>
+        </div>
 
-                                    <!-- Back to Home -->
-                                    <div class="flex items-center justify-end mt-4">
-                                        <a href="{{ route('home') }}" class="ml-4 tracking-wide font-semibold bg-gray-200 text-gray-700 w-full py-4 rounded-lg hover:bg-gray-300 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
-                                            Back Home
-                                        </a>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> 
-        </div> 
+        <button type="submit" class="submit-btn">Create Account →</button>
+      </form>
+
+      <div class="auth-footer">
+        Already have an account? <a href="{{ route('login') }}">Sign In</a>
+      </div>
+      <a href="{{ route('home') }}" class="back-home">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        Back to Home
+      </a>
     </div>
+  </div>
+</div>
+
+<script>
+  function validateForm(event) {
+    let isValid = true;
+    const show = (id, msg) => { document.getElementById(id).innerText = msg; if(msg) isValid = false; };
+
+    const name = document.getElementById('name').value.trim();
+    show('nameError', name.length < 3 ? 'Name must be at least 3 characters.' : '');
+
+    const email = document.getElementById('email').value.trim();
+    show('emailError', !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? 'Enter a valid email address.' : '');
+
+    const pw = document.getElementById('password').value;
+    show('passwordError', pw.length < 6 ? 'Password must be at least 6 characters.' : '');
+
+    const cpw = document.getElementById('password_confirmation').value;
+    show('confirmPasswordError', cpw !== pw ? 'Passwords do not match.' : '');
+
+    if (!isValid) event.preventDefault();
+    return isValid;
+  }
+  ['name','email','password','password_confirmation'].forEach(id => {
+    document.getElementById(id).addEventListener('input', () => {
+      const errId = id === 'password_confirmation' ? 'confirmPasswordError' : id + 'Error';
+      document.getElementById(errId).innerText = '';
+    });
+  });
+</script>
 </body>
 </html>
