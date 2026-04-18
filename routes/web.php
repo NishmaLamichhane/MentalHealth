@@ -9,12 +9,16 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SpecialistController;
 use App\Http\Controllers\TherapistController;
 use App\Http\Controllers\BookingController;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserProgressController;
 use Illuminate\Support\Facades\Route;
 
-// Public Routes
+/*
+|--------------------------------------------------------------------------
+| PUBLIC ROUTES
+|--------------------------------------------------------------------------
+*/
+
 Route::get('/', [PagesController::class, 'welcome'])->name('home');
 Route::get('/activities', [PagesController::class, 'activities'])->name('activities');
 Route::get('/viewtherapist/{id}', [PagesController::class, 'viewtherapist'])->name('viewtherapist');
@@ -22,89 +26,149 @@ Route::get('/specialisttherapist/{id}', [PagesController::class, 'specialistther
 Route::get('/search', [PagesController::class, 'search'])->name('search');
 Route::get('/about', [PagesController::class, 'about'])->name('about');
 
-// Route::get('register', [RegisteredUserController::class, 'create'])->name('register');
-// Route::post('register', [RegisteredUserController::class, 'store']);
-
-// User Routes
+/*
+|--------------------------------------------------------------------------
+| USERS
+|--------------------------------------------------------------------------
+*/
 Route::resource('users', UserController::class);
 
-//User Progress
-
+/*
+|--------------------------------------------------------------------------
+| AUTH MIDDLEWARE GROUP
+|--------------------------------------------------------------------------
+*/
 Route::middleware(['auth'])->group(function () {
-    Route::get('/progress', [UserProgressController::class, 'index'])->name('user_progress.index');
-    Route::get('/user/progress', [UserProgressController::class, 'index'])->name('user_progress.index');
-    Route::get('/progress/create', [UserProgressController::class, 'create'])->name('user_progress.create');
-    Route::post('/progress', [UserProgressController::class, 'store'])->name('user_progress.store');
-    Route::get('/progress/{id}/edit', [UserProgressController::class, 'edit'])->name('user_progress.edit');
-    Route::put('/progress/{id}',[UserProgressController::class,'update'])->name('user_progress.update');
-    Route::delete('/progress/{id}', [UserProgressController::class, 'destroy'])->name('user_progress.destroy');
+
+    /*
+    |--------------------------------------------------------------------------
+    | USER PROGRESS
+    |--------------------------------------------------------------------------
+    */
+    Route::prefix('progress')->name('user_progress.')->group(function () {
+        Route::get('/', [UserProgressController::class, 'index'])->name('index');
+        Route::get('/create', [UserProgressController::class, 'create'])->name('create');
+        Route::post('/', [UserProgressController::class, 'store'])->name('store');
+        Route::get('/{id}/edit', [UserProgressController::class, 'edit'])->name('edit');
+        Route::put('/{id}', [UserProgressController::class, 'update'])->name('update');
+        Route::delete('/{id}', [UserProgressController::class, 'destroy'])->name('destroy');
+    });
+
+    /*
+    |--------------------------------------------------------------------------
+    | BOOKINGS (USER SIDE)
+    |--------------------------------------------------------------------------
+    */
+    Route::prefix('bookings')->name('bookings.')->group(function () {
+        Route::get('/index', [BookingController::class, 'index'])->name('index');
+        Route::get('/create/{therapist}', [BookingController::class, 'create'])->name('create');
+        Route::post('/', [BookingController::class, 'store'])->name('store');
+        Route::get('/{id}/edit', [BookingController::class, 'edit'])->name('edit');
+        Route::put('/{id}', [BookingController::class, 'update'])->name('update');
+        Route::delete('/{id}', [BookingController::class, 'destroy'])->name('destroy');
+    });
+
 });
 
-// Authenticated User Routes
-Route::middleware(['auth'])->group(function () {
-    // Booking Routes
-    Route::get('/bookings/index', [BookingController::class, 'index'])->name('bookings.index');
-    Route::get('/bookings/create/{therapist}', [BookingController::class, 'create'])->name('bookings.create');
-
-    // Route::get('/bookings/create', [BookingController::class, 'create'])->name('bookings.create');
-    Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
-    Route::get('/bookings/{id}/edit', [BookingController::class, 'edit'])->name('bookings.edit');
-    Route::put('/bookings/{id}', [BookingController::class, 'update'])->name('bookings.update');
-    Route::delete('/bookings/{id}', [BookingController::class, 'destroy'])->name('bookings.destroy');
-    // Route::post('nomination/{bookingId}/store',[NominationController::class,'store'])->name('nomination.store');
-});
-
-// Admin Routes
+/*
+|--------------------------------------------------------------------------
+| ADMIN ROUTES
+|--------------------------------------------------------------------------
+*/
 Route::middleware(['auth', 'admin'])->group(function () {
-    // Specialist Routes
-    Route::get('/specialist', [SpecialistController::class, 'index'])->name('specialist.index');
-    Route::get('/specialist/create', [SpecialistController::class, 'create'])->name('specialist.create');
-    Route::post('/specialist/store', [SpecialistController::class, 'store'])->name('specialist.store');
-    Route::get('/specialist/{specialist}/edit', [SpecialistController::class, 'edit'])->name('specialist.edit');
-    Route::put('/specialist/{specialist}/update', [SpecialistController::class, 'update'])->name('specialist.update');
-    Route::delete('/specialist/{id}', [SpecialistController::class, 'destroy'])->name('specialist.destroy');
 
-    // Therapist Routes
-    Route::get('/therapist', [TherapistController::class, 'index'])->name('therapist.index');
-    Route::get('/therapist/create', [TherapistController::class, 'create'])->name('therapist.create');
-    Route::post('/therapist/store', [TherapistController::class, 'store'])->name('therapist.store');
-    // Route::get('/therapist/{id}/edit', [TherapistController::class, 'edit'])->name('therapist.edit');
-    Route::get('/therapist/{therapist}/edit', [TherapistController::class, 'edit'])->name('therapist.edit');
-    // Route::put('/therapist/{id}/update', [TherapistController::class, 'update'])->name('therapist.update');
-    Route::put('/therapist/{therapist}/update', [TherapistController::class, 'update'])->name('therapist.update');
-    // Route::delete('/therapist/{id}', [TherapistController::class, 'destroy'])->name('therapist.destroy');
-    Route::delete('/therapist/{therapist}', [TherapistController::class, 'destroy'])->name('therapist.destroy');
+    /*
+    |--------------------------------------------------------------------------
+    | SPECIALIST
+    |--------------------------------------------------------------------------
+    */
+    Route::prefix('specialist')->name('specialist.')->group(function () {
+        Route::get('/', [SpecialistController::class, 'index'])->name('index');
+        Route::get('/create', [SpecialistController::class, 'create'])->name('create');
+        Route::post('/store', [SpecialistController::class, 'store'])->name('store');
+        Route::get('/{specialist}/edit', [SpecialistController::class, 'edit'])->name('edit');
+        Route::put('/{specialist}', [SpecialistController::class, 'update'])->name('update');
+        Route::delete('/{specialist}', [SpecialistController::class, 'destroy'])->name('destroy');
+    });
 
-    // Category Routes
-    Route::get('/category', [CategoryController::class, 'index'])->name('category.index');
-    Route::get('/category/create', [CategoryController::class, 'create'])->name('category.create');
-    Route::post('/category/store', [CategoryController::class, 'store'])->name('category.store');
-    Route::get('/category/{category}/edit', [CategoryController::class, 'edit'])->name('category.edit');
-    Route::put('/category/{category}/update', [CategoryController::class, 'update'])->name('category.update');
-    Route::delete('/category/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
+    /*
+    |--------------------------------------------------------------------------
+    | THERAPIST (FIXED)
+    |--------------------------------------------------------------------------
+    */
+    Route::prefix('therapist')->name('therapist.')->group(function () {
+        Route::get('/', [TherapistController::class, 'index'])->name('index');
+        Route::get('/create', [TherapistController::class, 'create'])->name('create');
+        Route::post('/store', [TherapistController::class, 'store'])->name('store');
 
-    // Mindfulness Activities Routes
-    Route::get('/mindfulness_activities', [ActivityController::class, 'index'])->name('mindfulness_activities.index');
-    Route::get('/mindfulness_activities/create', [ActivityController::class, 'create'])->name('mindfulness_activities.create');
-    Route::post('/mindfulness_activities/store', [ActivityController::class, 'store'])->name('mindfulness_activities.store');
-    Route::get('/mindfulness_activities/{mindfulness_activities}/edit', [ActivityController::class, 'edit'])->name('mindfulness_activities.edit');
-    Route::put('/mindfulness_activities/{mindfulness_activities}/update', [ActivityController::class, 'update'])->name('mindfulness_activities.update');
-    Route::delete('/mindfulness_activities/{mindfulness_activities}', [ActivityController::class, 'destroy'])->name('mindfulness_activities.destroy');
+        // IMPORTANT FIX: keep consistent model binding
+        Route::get('/{therapist}/edit', [TherapistController::class, 'edit'])->name('edit');
+        Route::put('/{therapist}', [TherapistController::class, 'update'])->name('update');
+        Route::delete('/{therapist}', [TherapistController::class, 'destroy'])->name('destroy');
+    });
 
-    Route::get('/bookings', [BookingController::class, 'approve'])->name('bookings.approve');
-    Route::get('/bookings/{id}/updateStatus/{status}', [BookingController::class, 'updateStatus'])->name('bookings.updateStatus');
+    /*
+    |--------------------------------------------------------------------------
+    | CATEGORY
+    |--------------------------------------------------------------------------
+    */
+    Route::prefix('category')->name('category.')->group(function () {
+        Route::get('/', [CategoryController::class, 'index'])->name('index');
+        Route::get('/create', [CategoryController::class, 'create'])->name('create');
+        Route::post('/store', [CategoryController::class, 'store'])->name('store');
+        Route::get('/{category}/edit', [CategoryController::class, 'edit'])->name('edit');
+        Route::put('/{category}', [CategoryController::class, 'update'])->name('update');
+        Route::delete('/{category}', [CategoryController::class, 'destroy'])->name('destroy');
+    });
+
+    /*
+    |--------------------------------------------------------------------------
+    | MINDSET / ACTIVITIES
+    |--------------------------------------------------------------------------
+    */
+    Route::prefix('mindfulness_activities')->name('mindfulness_activities.')->group(function () {
+        Route::get('/', [ActivityController::class, 'index'])->name('index');
+        Route::get('/create', [ActivityController::class, 'create'])->name('create');
+        Route::post('/store', [ActivityController::class, 'store'])->name('store');
+        Route::get('/{activity}/edit', [ActivityController::class, 'edit'])->name('edit');
+        Route::put('/{activity}', [ActivityController::class, 'update'])->name('update');
+        Route::delete('/{activity}', [ActivityController::class, 'destroy'])->name('destroy');
+    });
+
+    /*
+    |--------------------------------------------------------------------------
+    | BOOKING APPROVAL (ADMIN)
+    |--------------------------------------------------------------------------
+    */
+    Route::get('/bookings/approve', [BookingController::class, 'approve'])->name('bookings.approve');
     Route::get('/bookings/history', [BookingController::class, 'history'])->name('bookings.history');
+
+    Route::get('/bookings/{id}/updateStatus/{status}', [BookingController::class, 'updateStatus'])
+        ->name('bookings.updateStatus');
+
+    /*
+    |--------------------------------------------------------------------------
+    | DASHBOARD
+    |--------------------------------------------------------------------------
+    */
+    Route::get('/dashboard', [DashboardController::class, 'dashboard'])
+        ->name('dashboard');
 });
 
-// Dashboard Route
-Route::get('/dashboard', [DashboardController::class, 'dashboard'])->middleware(['auth', 'admin'])->name('dashboard');
-
-// Profile Routes
+/*
+|--------------------------------------------------------------------------
+| PROFILE
+|--------------------------------------------------------------------------
+*/
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Auth Routes
+/*
+|--------------------------------------------------------------------------
+| AUTH
+|--------------------------------------------------------------------------
+*/
 require __DIR__ . '/auth.php';
