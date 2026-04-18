@@ -15,6 +15,9 @@ class UserProgress extends Model
         'progress_date',
         'status',
     ];
+    protected $casts = [
+    'progress_date' => 'date',
+];
 
     public function user()
     {
