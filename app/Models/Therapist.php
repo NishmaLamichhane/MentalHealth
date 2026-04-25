@@ -9,17 +9,30 @@ class Therapist extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'specialist_id', 'location', 'experience', 'status', 'photopath','fee','time_slot'];
-
-    protected $casts = [
-        'time_slot' => 'array', // This automatically casts JSON to array
+    protected $fillable = [
+        'name', 
+        'description', 
+        'specialist_id', 
+        'location', 
+        'experience', 
+        'status', 
+        'photopath',
+        'fee'
     ];
 
-
-    // Define the relationship with the Specialist model
+    /**
+     * Define the relationship with the Specialist model
+     */
     public function specialist()
     {
         return $this->belongsTo(Specialist::class, 'specialist_id');
     }
-    
+    public function schedules()
+    {
+        return $this->hasMany(TherapistSchedule::class);
+    }
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class);
+    }
 }
