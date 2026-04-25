@@ -66,6 +66,15 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/{id}/edit', [BookingController::class, 'edit'])->name('edit');
         Route::put('/{id}', [BookingController::class, 'update'])->name('update');
         Route::delete('/{id}', [BookingController::class, 'destroy'])->name('destroy');
+
+        /*
+        |----------------------------------------------------------------------
+        | DYNAMIC SLOT API ROUTES
+        | Called via AJAX to fetch available time slots for a given date.
+        |----------------------------------------------------------------------
+        */
+        Route::get('/slots', [BookingController::class, 'getAvailableSlots'])->name('slots');
+        Route::get('/{id}/slots', [BookingController::class, 'getAvailableSlotsForEdit'])->name('slots.edit');
     });
 
 });
@@ -93,15 +102,13 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     /*
     |--------------------------------------------------------------------------
-    | THERAPIST (FIXED)
+    | THERAPIST
     |--------------------------------------------------------------------------
     */
     Route::prefix('therapist')->name('therapist.')->group(function () {
         Route::get('/', [TherapistController::class, 'index'])->name('index');
         Route::get('/create', [TherapistController::class, 'create'])->name('create');
         Route::post('/store', [TherapistController::class, 'store'])->name('store');
-
-        // IMPORTANT FIX: keep consistent model binding
         Route::get('/{therapist}/edit', [TherapistController::class, 'edit'])->name('edit');
         Route::put('/{therapist}', [TherapistController::class, 'update'])->name('update');
         Route::delete('/{therapist}', [TherapistController::class, 'destroy'])->name('destroy');
@@ -142,7 +149,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
     */
     Route::get('/bookings/approve', [BookingController::class, 'approve'])->name('bookings.approve');
     Route::get('/bookings/history', [BookingController::class, 'history'])->name('bookings.history');
-
     Route::get('/bookings/{id}/updateStatus/{status}', [BookingController::class, 'updateStatus'])
         ->name('bookings.updateStatus');
 
@@ -151,8 +157,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     | DASHBOARD
     |--------------------------------------------------------------------------
     */
-    Route::get('/dashboard', [DashboardController::class, 'dashboard'])
-        ->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 });
 
 /*

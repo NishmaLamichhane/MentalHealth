@@ -414,6 +414,13 @@
                 <i class="ri-group-line"></i>
                 Users
             </a>
+
+            <div class="website"></div>
+                <a href="{{ route('home') }}" target="_blank" class="nav-link">
+                    <i class="ri-global-line"></i>
+                    Visit Website
+                </a>
+            </div>
         </nav>
 
         <div class="sidebar-footer">

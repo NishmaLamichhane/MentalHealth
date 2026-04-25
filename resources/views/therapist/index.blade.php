@@ -2,7 +2,6 @@
 
 @section('content')
 
-<!-- Page Header -->
 <div class="page-header">
     <div class="page-title-wrap">
         <div class="page-label text-gray-500 dark:text-gray-400">Management</div>
@@ -28,7 +27,6 @@
 </div>
 @endif
 
-<!-- TABLE -->
 <div class="table-card bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700">
     <div class="tbl-scroll">
         <table class="tbl w-full">
@@ -39,8 +37,7 @@
                     <th>Therapist</th>
                     <th>Specialization</th>
                     <th>Location</th>
-                    <th>Experience</th>
-                    <th class="w-24">Fee</th>
+                    <th>Working Days</th> <th class="w-24">Fee</th>
                     <th>Status</th>
                     <th class="w-40">Actions</th>
                 </tr>
@@ -59,15 +56,21 @@
 
                     <td>
                         <div class="flex items-center gap-3">
-                            <img src="{{ asset('images/therapists/' . $therapist->photopath) }}"
-                                 class="w-10 h-10 rounded-lg object-cover border">
+                            @if($therapist->photopath)
+                                <img src="{{ asset('images/therapists/' . $therapist->photopath) }}"
+                                     class="w-10 h-10 rounded-lg object-cover border">
+                            @else
+                                <div class="w-10 h-10 rounded-lg bg-gray-200 flex items-center justify-center font-bold text-gray-500">
+                                    {{ Str::substr($therapist->name, 0, 1) }}
+                                </div>
+                            @endif
 
                             <div>
                                 <p class="font-semibold text-gray-900 dark:text-white text-sm">
                                     {{ $therapist->name }}
                                 </p>
                                 <p class="text-xs text-gray-500 dark:text-gray-400">
-                                    {{ Str::limit($therapist->description, 60) }}
+                                    ⭐ {{ $therapist->experience }} Exp.
                                 </p>
                             </div>
                         </div>
@@ -83,8 +86,16 @@
                         {{ $therapist->location }}
                     </td>
 
-                    <td class="text-gray-600 dark:text-gray-300">
-                        {{ $therapist->experience }}
+                    <td>
+                        <div class="flex flex-wrap gap-1">
+                            @forelse($therapist->schedules as $schedule)
+                                <span class="px-2 py-1 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded text-[10px] font-semibold text-gray-600 dark:text-gray-300 uppercase tracking-wider">
+                                    {{ Str::substr($schedule->day_of_week, 0, 3) }}
+                                </span>
+                            @empty
+                                <span class="text-xs text-red-500 italic">No schedule set</span>
+                            @endforelse
+                        </div>
                     </td>
 
                     <td>
@@ -138,7 +149,6 @@
     </div>
 </div>
 
-<!-- DELETE MODAL (FIXED OVERLAY) -->
 <div id="popup"
      class="fixed inset-0 hidden z-[9999] bg-black/50 flex items-center justify-center"
      onclick="if(event.target===this)hidePopup()">

@@ -88,21 +88,25 @@
         color: #4f46e5; font-size: 0.8rem; font-weight: 700; flex-shrink: 0;
     }
 
-    /* ===== BADGES ===== */
+    /* ===== BADGES (UPDATED TO MATCH CONTROLLER) ===== */
     .badge {
         display: inline-flex; align-items: center; gap: 5px;
         padding: 4px 11px; border-radius: 999px;
         font-size: 0.68rem; font-weight: 700; white-space: nowrap; letter-spacing: 0.03em;
     }
     .badge-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    
     .badge-pending  { background: #fef9c3; color: #854d0e; }
     .badge-pending .badge-dot  { background: #eab308; }
-    .badge-confirmed { background: #d1fae5; color: #065f46; }
-    .badge-confirmed .badge-dot { background: #10b981; }
-    .badge-completed { background: #dbeafe; color: #1e40af; }
-    .badge-completed .badge-dot { background: #3b82f6; }
-    .badge-cancelled { background: #fee2e2; color: #991b1b; }
-    .badge-cancelled .badge-dot { background: #ef4444; }
+    
+    .badge-processing { background: #e0f2fe; color: #0369a1; }
+    .badge-processing .badge-dot { background: #0ea5e9; }
+    
+    .badge-approved { background: #d1fae5; color: #065f46; }
+    .badge-approved .badge-dot { background: #10b981; }
+    
+    .badge-rejected { background: #fee2e2; color: #991b1b; }
+    .badge-rejected .badge-dot { background: #ef4444; }
 
     /* ===== ACTION BUTTONS ===== */
     .act-btn {
@@ -195,7 +199,6 @@
 </style>
 
 
-<!-- PAGE HERO -->
 <section class="page-hero">
     <div class="hero-orb w-64 h-64 bg-blue-600" style="top:-40px; left:-60px; opacity:0.18;"></div>
     <div class="hero-orb w-48 h-48 bg-indigo-600" style="bottom:10px; right:-30px; opacity:0.15; animation-delay:-4s;"></div>
@@ -215,7 +218,6 @@
 </section>
 
 
-<!-- MAIN CONTENT -->
 <section class="py-12 sm:py-16 bg-slate-50 -mt-1">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
@@ -229,11 +231,11 @@
         </div>
         @endif
 
-        {{-- Stats --}}
+        {{-- Stats (UPDATED TO MATCH CONTROLLER) --}}
         @php
-            $total     = $bookings->count();
-            $pending   = $bookings->where('status', 'Pending')->count();
-            $confirmed = $bookings->where('status', 'Confirmed')->count();
+            $total    = $bookings->count();
+            $pending  = $bookings->where('status', 'Pending')->count();
+            $approved = $bookings->where('status', 'Approved')->count();
         @endphp
 
         <div class="stats-row rv rv-d1">
@@ -260,8 +262,8 @@
                     <i class="ri-checkbox-circle-line" style="color:#22c55e;"></i>
                 </div>
                 <div>
-                    <span class="block text-xl font-bold text-emerald-500 leading-none">{{ $confirmed }}</span>
-                    <span class="text-[10px] text-gray-400 uppercase tracking-widest font-semibold">Confirmed</span>
+                    <span class="block text-xl font-bold text-emerald-500 leading-none">{{ $approved }}</span>
+                    <span class="text-[10px] text-gray-400 uppercase tracking-widest font-semibold">Approved</span>
                 </div>
             </div>
         </div>
@@ -343,7 +345,6 @@
             <div class="m-card rv vis">
                 <div class="m-card-top"></div>
                 <div class="p-4">
-                    <!-- Header -->
                     <div class="flex items-center justify-between mb-4">
                         <div class="flex items-center gap-3">
                             <div class="avatar w-11 h-11 text-sm">{{ Str::substr($booking->therapist->name ?? 'T', 0, 1) }}</div>
@@ -358,7 +359,6 @@
                         </span>
                     </div>
 
-                    <!-- Details grid -->
                     <div class="grid grid-cols-2 gap-2 mb-3">
                         <div class="detail-chip">
                             <div class="detail-label"><i class="ri-calendar-line"></i> Date</div>
@@ -378,7 +378,6 @@
                         </div>
                     </div>
 
-                    <!-- Contact info -->
                     <div class="flex items-center gap-4 text-xs text-gray-400 px-1 mb-4">
                         <span class="flex items-center gap-1 min-w-0">
                             <i class="ri-mail-line text-gray-300 shrink-0"></i>
@@ -390,7 +389,6 @@
                         </span>
                     </div>
 
-                    <!-- Actions -->
                     @if ($booking->status == 'Pending')
                     <div class="grid grid-cols-2 gap-2">
                         <a href="{{ route('bookings.edit', $booking->id) }}" class="act-btn act-reschedule justify-center">
@@ -410,7 +408,6 @@
 
         @else
 
-        <!-- EMPTY STATE -->
         <div class="empty-state rv vis">
             <div class="empty-icon">
                 <i class="ri-calendar-check-line"></i>
@@ -432,10 +429,8 @@
 </section>
 
 
-<!-- CANCEL MODAL -->
 <div id="cancelPopup" class="cmodal" onclick="if(event.target===this)hideCancelPopup()">
     <div class="cmodal-box">
-        <!-- Top bar -->
         <div style="height:5px; background:linear-gradient(90deg,#ef4444,#f97316);"></div>
         <div class="p-7 text-center">
             <div class="w-16 h-16 rounded-full bg-red-50 flex items-center justify-center mx-auto mb-4">
