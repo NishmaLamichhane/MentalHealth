@@ -20,6 +20,9 @@ class CreateBookingsTable extends Migration
             $table->text('message')->nullable();
             $table->string('status')->default('Pending');
             $table->timestamps();
+
+            // THE PROFESSIONAL UPGRADE: Database-level double-booking protection
+            $table->unique(['therapist_id', 'booking_date', 'booking_time'], 'unique_therapist_slot');
         });
     }
 
